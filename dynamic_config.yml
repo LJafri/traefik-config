@@ -1,24 +1,24 @@
 http:
   routers:
-    service1-router:
+    experian-router:
       rule: "PathPrefix(`/experian`)"
       service: experian
       entryPoints:
         - web
 
-    service2-router:
+    lexis-router:
       rule: "PathPrefix(`/lexis`)"
-      service: lexisnexis
+      service: lexis
       entryPoints:
         - web
 
   services:
-    service1:
+    experian:
       loadBalancer:
         servers:
           - url: "http://httpbin.org:80"
 
-    service2:
+    lexis:
       loadBalancer:
         servers:
           - url: "https://catfact.ninja:443"

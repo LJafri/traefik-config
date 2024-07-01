@@ -1,0 +1,17 @@
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  dashboard: true
+  insecure: true
+
+providers:
+  docker: {}
+  file:
+    filename: "/etc/traefik/dynamic_config.yml"
+
+log:
+  level: DEBUG
+
+accessLog: {}

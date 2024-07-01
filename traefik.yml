@@ -12,6 +12,8 @@ providers:
     filename: "/etc/traefik/dynamic_config.yml"
 
 log:
-  level: DEBUG
+  level: TRACE
 
-accessLog: {}
+accessLog:
+  filePath: "/var/log/traefik/access.log"
+  format: json

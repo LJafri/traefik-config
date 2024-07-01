@@ -1,6 +1,6 @@
 services:
   traefik:
-    build: .
+    image: traefik:latest
     container_name: traefik
     ports:
       - "8081:80"

@@ -5,20 +5,34 @@ http:
       service: experian
       entryPoints:
         - web
+      middlewares:
+        - stripExperianPrefix
 
     lexis-router:
       rule: "PathPrefix(`/lexis`)"
       service: lexis
       entryPoints:
         - web
+      middlewares:
+        - stripExperianPrefix
 
   services:
     experian:
       loadBalancer:
         servers:
-          - url: "http://httpbin.org:80"
+          - url: "https://digidates.de/api/v1/checkdate?date=2023-01-01"
 
     lexis:
       loadBalancer:
         servers:
-          - url: "https://catfact.ninja:443"
+          - url: "https://dogapi.dog/docs/api-v2"
+
+  middlewares:
+    stripExperianPrefix:
+      stripPrefix:
+        prefixes:
+          - "/experian"
+    stripLexisPrefix:
+      stripPrefix:
+        prefixes:
+          - "/lexis"

@@ -6,7 +6,7 @@ http:
       entryPoints:
         - web
       middlewares:
-        - stripExperianPrefix
+        - replaceExperianPrefix
 
     lexis-router:
       rule: "PathPrefix(`/lexis`)"
@@ -14,25 +14,26 @@ http:
       entryPoints:
         - web
       middlewares:
-        - stripExperianPrefix
+        - replaceLexisPrefix
 
   services:
     experian:
       loadBalancer:
         servers:
-          - url: "https://digidates.de/api/v1/checkdate?date=2023-01-01"
+          - url: "https://digidates.de"
 
     lexis:
       loadBalancer:
         servers:
-          - url: "https://dogapi.dog/docs/api-v2"
+          - url: "https://dogapi.dog"
 
   middlewares:
-    stripExperianPrefix:
-      stripPrefix:
-        prefixes:
-          - "/experian"
-    stripLexisPrefix:
-      stripPrefix:
-        prefixes:
-          - "/lexis"
+    replaceExperianPrefix:
+      replacePathRegex:
+        regex: "^/experian(.*)"
+        replacement: "/api/v1/checkdate?date=2023-01-11"
+
+    replaceLexisPrefix:
+      replacePathRegex:
+        regex: "^/lexis(.*)"
+        replacement: "/api/v2/breeds"

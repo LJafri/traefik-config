@@ -55,6 +55,6 @@ func main() {
 	log.Println("Starting proxy service on port 3000")
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
-
-// curl -H "x-service-endpoint: httpbin.org" "http://localhost:3030/get"                    
+https://uat-us-api.experian.com/consumerservices/credit-profile/v1/decision-services
+// curl -H "x-service-endpoint: uat-us-api.experian.com" "https://localhost:3030/consumerservices/credit-profile/v1/decision-services"                    
 

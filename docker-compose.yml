@@ -1,11 +1,24 @@
 services:
   traefik:
-    build: .
-    container_name: traefik
+    image: traefik:latest
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:3030"
+      - "--entrypoints.traefik.address=:9901"
+      - "--providers.file.filename=/etc/traefik/dynamic/dynamic.yml"
+      - "--log.level=DEBUG"
     ports:
-      - "8081:80"
-      - "8082:8080" 
+      - "3030:3030"
+      - "9901:9901"
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.yml:/etc/traefik/traefik.yml"
-      - "./dynamic_config.yml:/etc/traefik/dynamic_config.yml"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./dynamic.yml:/etc/traefik/dynamic/dynamic.yml"
+
+  proxy-service:
+    build: .
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.proxyservice.rule=Host(`localhost`)"
+      - "traefik.http.routers.proxyservice.entrypoints=web"
+      - "traefik.http.services.proxyservice.loadbalancer.server.port=3000"

@@ -1,6 +1,11 @@
-FROM traefik:v2.9
+FROM golang:1.22.4
 
-COPY traefik.yml /etc/traefik/traefik.yml
-COPY dynamic_config.yml /etc/traefik/dynamic_config.yml
+WORKDIR /app
 
-CMD ["traefik", "--configFile=/etc/traefik/traefik.yml"]
+COPY . .
+
+RUN go build -o proxy_service .
+
+EXPOSE 3000
+
+CMD ["./proxy_service"]

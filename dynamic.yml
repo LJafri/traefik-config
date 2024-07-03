@@ -1,0 +1,13 @@
+http:
+  routers:
+    proxyservice:
+      rule: "HeaderRegexp(`X-Service-Endpoint`, `.*`)"
+      entryPoints:
+        - web
+      service: proxy-service
+
+  services:
+    proxy-service:
+      loadBalancer:
+        servers:
+          - url: "http://proxy-service:3000"
